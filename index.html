@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Game - HTML</title>
+</head>
+<body>
+<canvas id="game" width="300" height="300">Seu navegador não. Suporta.Atualize-o.</canvas>
+<script>
+	var canvas = document.getElementById('game');
+
+	var ctx = canvas.getContext('2d');
+
+	var x = 20;
+	var y = 100;
+	var raio = 5;
+	var velocidade = 60;
+
+	var anterior = new Date().getTime();
+
+	requestAnimationFrame(mexerBola);
+
+	function mexerBola() {
+		var agora = new Date().getTime();
+
+		var decorrido = agora - anterior;
+
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+		ctx.beginPath();
+
+		ctx.arc(x, y, raio, 0, Math.PI * 2);
+		ctx.fill();
+
+		x += velocidade * decorrido / 1000;
+
+
+		anterior = agora;
+		requestAnimationFrame(mexerBola);
+	}
+
+</script>
+</body>
+</html>
