@@ -20,24 +20,24 @@ Animacao.prototype = {
 
 		ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 	},
-	proximoFrame: function proximoFrame() {
-		if (!this.ligado) {
+	proximoFrame: function () {
+		var self = this;
+		if (!self.ligado) {
 			return;
 		}
 
-		this.limparTela();
+		self.limparTela();
 
-		this.sprites.forEach(function (sprite) {
+		self.sprites.forEach(function (sprite) {
 			sprite.atualizar();
 		});
 
-		this.sprites.forEach(function (sprite) {
+		self.sprites.forEach(function (sprite) {
 			sprite.desenhar();
 		});
 
-		var animacao = this;
 		requestAnimationFrame(function () {
-			animacao.proximoFrame();
+			self.proximoFrame();
 		});
 	}
 };
