@@ -6,39 +6,36 @@
 </head>
 <body>
 <canvas id="game" width="300" height="300">Seu navegador não. Suporta.Atualize-o.</canvas>
+<script src="js/animacao.js"></script>
+<script src="js/bola.js"></script>
 <script>
+
 	var canvas = document.getElementById('game');
 
 	var ctx = canvas.getContext('2d');
 
-	var x = 20;
-	var y = 100;
-	var raio = 5;
-	var velocidade = 60;
+	var b1 = new Bola(ctx);
+	b1.x = 100;
+	b1.y = 200;
+	b1.velocidadeX = 20;
+	b1.velocidadeY = -10;
+	b1.cor = 'red';
+	b1.raio = 20;
 
-	var anterior = new Date().getTime();
+	var b2 = new Bola(ctx);
+	b2.x = 200;
+	b2.y = 100;
+	b2.velocidadeX = -10;
+	b2.velocidadeY = 20;
+	b2.cor = 'blue';
+	b2.raio = 30;
 
-	requestAnimationFrame(mexerBola);
+	var animacao = new Animacao(ctx);
 
-	function mexerBola() {
-		var agora = new Date().getTime();
+	animacao.novoSprite(b1);
+	animacao.novoSprite(b2);
 
-		var decorrido = agora - anterior;
-
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-		ctx.beginPath();
-
-		ctx.arc(x, y, raio, 0, Math.PI * 2);
-		ctx.fill();
-
-		x += velocidade * decorrido / 1000;
-
-
-		anterior = agora;
-		requestAnimationFrame(mexerBola);
-	}
-
+	animacao.ligar();
 </script>
 </body>
 </html>
