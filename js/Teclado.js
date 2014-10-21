@@ -1,5 +1,7 @@
 var SETA_ESQUERDA = 37;
 var SETA_DIREITA = 39;
+var SETA_CIMA = 38;
+var SETA_BAIXO = 40;
 var ESPACO = 32;
 
 function Teclado(elemento) {
