@@ -6,34 +6,29 @@
 </head>
 <body>
 <canvas id="game" width="300" height="300">Seu navegador não. Suporta.Atualize-o.</canvas>
-<script src="js/animacao.js"></script>
-<script src="js/bola.js"></script>
+<script src="js/Animacao.js"></script>
+<script src="js/Bola.js"></script>
+<script src="js/Teclado.js"></script>
+<script src="js/Heroi.js"></script>
 <script>
 
 	var canvas = document.getElementById('game');
 
 	var ctx = canvas.getContext('2d');
 
-	var b1 = new Bola(ctx);
-	b1.x = 100;
-	b1.y = 200;
-	b1.velocidadeX = 20;
-	b1.velocidadeY = -10;
-	b1.cor = 'red';
-	b1.raio = 20;
-
-	var b2 = new Bola(ctx);
-	b2.x = 200;
-	b2.y = 100;
-	b2.velocidadeX = -10;
-	b2.velocidadeY = 20;
-	b2.cor = 'blue';
-	b2.raio = 30;
+	var teclado = new Teclado(document);
 
 	var animacao = new Animacao(ctx);
 
-	animacao.novoSprite(b1);
-	animacao.novoSprite(b2);
+	var heroi = new Heroi(ctx, teclado, animacao);
+	heroi.x = 0;
+	heroi.y = 100;
+
+	animacao.novoSprite(heroi);
+
+	teclado.disparou(ESPACO, function () {
+		heroi.atirar();
+	});
 
 	animacao.ligar();
 </script>
