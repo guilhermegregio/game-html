@@ -13,6 +13,7 @@
 <script src="js/Teclado.js"></script>
 <script src="js/Heroi.js"></script>
 <script src="js/Spritesheet.js"></script>
+<script src="js/Sonic.js"></script>
 <script>
 
 
@@ -20,22 +21,20 @@
 
 	var ctx = canvas.getContext('2d');
 
+	var teclado = new Teclado(document);
+
+	var animacao = new Animacao(ctx);
+
 	var imgSonic = new Image();
 	imgSonic.src = 'images/spritesheet.png';
+	var sonic = new Sonic(ctx, teclado, imgSonic);
+	sonic.x = 0;
+	sonic.y = 200;
 
-	var sheet = new Spritesheet(ctx, imgSonic, 3, 8);
-	sheet.intervalo = 60;
-	sheet.linha = 1;
+	animacao.novoSprite(sonic);
 
-	imgSonic.onload = gameLoop;
-
-	function gameLoop() {
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-		sheet.proximoQuadro();
-		sheet.desenhar(100, 100);
-
-		requestAnimationFrame(gameLoop);
+	imgSonic.onload = function () {
+		animacao.ligar();
 	}
 
 </script>
