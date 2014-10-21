@@ -3,6 +3,15 @@ var DIRECAO_DIREITA = 2;
 var DIRECAO_CIMA = 3;
 var DIRECAO_BAIXO = 4;
 
+function clone(obj) {
+	if (null == obj || "object" != typeof obj) return obj;
+	var copy = obj.constructor();
+	for (var attr in obj) {
+		if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+	}
+	return copy;
+}
+
 function Heroi(context, teclado, animacao) {
 	this.context = context;
 	this.teclado = teclado;
