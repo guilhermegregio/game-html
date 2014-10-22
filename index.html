@@ -36,30 +36,31 @@
 	b2.cor = 'red';
 	b2.raio = 30;
 
+	var b3 = new Bola(ctx);
+	b3.x = Math.floor(Math.random() * 500) + 50;
+	b3.y = Math.floor(Math.random() * 500) + 50;
+	b3.velocidadeX = -10;
+	b3.velocidadeY = 10;
+	b3.cor = 'purple';
+	b3.raio = 20;
+
 	var colisor = new Colisor();
 	colisor.novoSprite(b1);
 	colisor.novoSprite(b2);
+	colisor.novoSprite(b3);
 
 	colisor.aoColidir = function (sprite1, sprite2) {
 		console.log('PÁ!', sprite1, sprite2);
 	};
 
-	requestAnimationFrame(gameLoop);
+	var animacao = new Animacao(ctx);
 
-	function gameLoop() {
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
+	animacao.novoSprite(b1);
+	animacao.novoSprite(b2);
+	animacao.novoSprite(b3);
+	animacao.adicionaColisor(colisor);
 
-		b1.atualizar();
-		b2.atualizar();
-
-		b1.desenhar();
-		b2.desenhar();
-
-		colisor.processar();
-
-		requestAnimationFrame(gameLoop);
-	}
-
+	animacao.ligar();
 </script>
 </body>
 </html>

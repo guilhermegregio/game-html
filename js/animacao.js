@@ -2,6 +2,7 @@ function Animacao(context) {
 	this.context = context;
 	this.sprites = [];
 	this.ligado = false;
+	this.colisor = null;
 }
 
 Animacao.prototype = {
@@ -36,8 +37,15 @@ Animacao.prototype = {
 			sprite.desenhar();
 		});
 
+		if (self.colisor) {
+			this.colisor.processar();
+		}
+
 		requestAnimationFrame(function () {
 			self.proximoFrame();
 		});
+	},
+	adicionaColisor: function (colisor) {
+		this.colisor = colisor;
 	}
 };
