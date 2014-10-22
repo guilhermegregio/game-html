@@ -57,4 +57,4 @@ Sonic.prototype = {
 	desenhar: function () {
 		this.sheet.desenhar(this.x, this.y);
 	}
-}
+};

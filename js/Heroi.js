@@ -65,4 +65,4 @@ Heroi.prototype = {
 
 		this.animacao.novoSprite(tiro);
 	}
-}
+};

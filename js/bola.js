@@ -12,6 +12,14 @@ Bola.prototype = {
 	atualizar: function () {
 		var ctx = this.context;
 
+		if (this.x < this.raio || this.x > ctx.canvas.width - this.raio) {
+			this.velocidadeX *= -1;
+		}
+
+		if (this.y < this.raio || this.y > ctx.canvas.height - this.raio) {
+			this.velocidadeY *= -1;
+		}
+
 		this.x += this.velocidadeX;
 		this.y += this.velocidadeY;
 	},
@@ -25,5 +33,28 @@ Bola.prototype = {
 		ctx.fill();
 
 		ctx.restore();
+	},
+	retangulosColisao: function () {
+		return [
+			{
+				x: this.x - this.raio,
+				y: this.y - this.raio,
+				largura: this.raio * 2,
+				altura: this.raio * 2
+			}
+		]
+	},
+	colidiuCom: function (sprite) {
+		if (this.x < sprite.x) {
+			this.velocidadeX = -Math.abs(this.velocidadeX);
+		} else {
+			this.velocidadeX = Math.abs(this.velocidadeX);
+		}
+
+		if (this.y < sprite.y) {
+			this.velocidadeY = -Math.abs(this.velocidadeY);
+		} else {
+			this.velocidadeY = Math.abs(this.velocidadeY);
+		}
 	}
-}
+};

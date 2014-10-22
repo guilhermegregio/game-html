@@ -14,27 +14,50 @@
 <script src="js/Heroi.js"></script>
 <script src="js/Spritesheet.js"></script>
 <script src="js/Sonic.js"></script>
+<script src="js/Colisor.js"></script>
 <script>
-
-
 	var canvas = document.getElementById('game');
 
 	var ctx = canvas.getContext('2d');
 
-	var teclado = new Teclado(document);
+	var b1 = new Bola(ctx);
+	b1.x = 200;
+	b1.y = 200;
+	b1.velocidadeX = 10;
+	b1.velocidadeY = -5;
+	b1.cor = 'blue';
+	b1.raio = 30;
 
-	var animacao = new Animacao(ctx);
+	var b2 = new Bola(ctx);
+	b2.x = 300;
+	b2.y = 300;
+	b2.velocidadeX = -5;
+	b2.velocidadeY = 10;
+	b2.cor = 'red';
+	b2.raio = 30;
 
-	var imgSonic = new Image();
-	imgSonic.src = 'images/spritesheet.png';
-	var sonic = new Sonic(ctx, teclado, imgSonic);
-	sonic.x = 0;
-	sonic.y = 200;
+	var colisor = new Colisor();
+	colisor.novoSprite(b1);
+	colisor.novoSprite(b2);
 
-	animacao.novoSprite(sonic);
+	colisor.aoColidir = function (sprite1, sprite2) {
+		console.log('PÁ!', sprite1, sprite2);
+	};
 
-	imgSonic.onload = function () {
-		animacao.ligar();
+	requestAnimationFrame(gameLoop);
+
+	function gameLoop() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+		b1.atualizar();
+		b2.atualizar();
+
+		b1.desenhar();
+		b2.desenhar();
+
+		colisor.processar();
+
+		requestAnimationFrame(gameLoop);
 	}
 
 </script>
