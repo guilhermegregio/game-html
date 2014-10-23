@@ -17,6 +17,7 @@
 <script src="js/Colisor.js"></script>
 <script src="js/Fundo.js"></script>
 <script src="js/Nave.js"></script>
+<script src="js/Tiro.js"></script>
 <script>
 	var imgEspaco = new Image();
 	imgEspaco.src = 'images/fundo-espaco.png';
@@ -66,6 +67,10 @@
 		nave.x = canvas.width / 2 - imgNave.width / 2;
 		nave.y = canvas.height / 2 - imgNave.height / 2;
 		nave.velocidade = 5;
+
+		teclado.disparou(ESPACO, function () {
+			nave.atirar();
+		});
 
 		animacao.novoSprite(fundoEspaco);
 		animacao.novoSprite(fundoEstrelas);
