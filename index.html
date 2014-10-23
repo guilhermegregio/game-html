@@ -6,7 +6,7 @@
 	<link rel="stylesheet" href="css/game.css"/>
 </head>
 <body>
-<canvas id="game" width="600" height="600">Seu navegador não. Suporta.Atualize-o.</canvas>
+<canvas id="game" width="500" height="500">Seu navegador não. Suporta.Atualize-o.</canvas>
 <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.backbone.js"></script>
 <script src="js/Animacao.js"></script>
 <script src="js/Bola.js"></script>
@@ -15,52 +15,52 @@
 <script src="js/Spritesheet.js"></script>
 <script src="js/Sonic.js"></script>
 <script src="js/Colisor.js"></script>
+<script src="js/Fundo.js"></script>
 <script>
-	var canvas = document.getElementById('game');
+	var imgEspaco = new Image();
+	imgEspaco.src = 'images/fundo-espaco.png';
 
-	var ctx = canvas.getContext('2d');
+	var imgEstrelas = new Image();
+	imgEstrelas.src = 'images/fundo-estrelas.png';
 
-	var b1 = new Bola(ctx);
-	b1.x = Math.floor(Math.random() * 500) + 50;
-	b1.y = Math.floor(Math.random() * 500) + 50;
-	b1.velocidadeX = 10;
-	b1.velocidadeY = -5;
-	b1.cor = 'blue';
-	b1.raio = 30;
+	var imgNuvens = new Image();
+	imgNuvens.src = 'images/fundo-nuvens.png';
 
-	var b2 = new Bola(ctx);
-	b2.x = Math.floor(Math.random() * 500) + 50;
-	b2.y = Math.floor(Math.random() * 500) + 50;
-	b2.velocidadeX = -5;
-	b2.velocidadeY = 10;
-	b2.cor = 'red';
-	b2.raio = 30;
+	var carregadas = 0;
+	var total = 3;
 
-	var b3 = new Bola(ctx);
-	b3.x = Math.floor(Math.random() * 500) + 50;
-	b3.y = Math.floor(Math.random() * 500) + 50;
-	b3.velocidadeX = -10;
-	b3.velocidadeY = 10;
-	b3.cor = 'purple';
-	b3.raio = 20;
+	imgEspaco.onload = carregando;
+	imgEstrelas.onload = carregando;
+	imgNuvens.onload = carregando;
 
-	var colisor = new Colisor();
-	colisor.novoSprite(b1);
-	colisor.novoSprite(b2);
-	colisor.novoSprite(b3);
+	function carregando() {
+		carregadas++;
+		if (carregadas === total) {
+			iniciar();
+		}
+	}
 
-	colisor.aoColidir = function (sprite1, sprite2) {
-		console.log('PÁ!', sprite1, sprite2);
-	};
+	function iniciar() {
+		var canvas = document.getElementById('game');
+		var ctx = canvas.getContext('2d');
 
-	var animacao = new Animacao(ctx);
+		var fundoEspaco = new Fundo(ctx, imgEspaco);
+		var fundoEstrelas = new Fundo(ctx, imgEstrelas);
+		var fundoNuvens = new Fundo(ctx, imgNuvens);
 
-	animacao.novoSprite(b1);
-	animacao.novoSprite(b2);
-	animacao.novoSprite(b3);
-	animacao.adicionaColisor(colisor);
+		fundoEspaco.velocidade = 3;
+		fundoEstrelas.velocidade = 7;
+		fundoNuvens.velocidade = 10;
 
-	animacao.ligar();
+		var animacao = new Animacao(ctx);
+
+		animacao.novoSprite(fundoEspaco);
+		animacao.novoSprite(fundoEstrelas);
+		animacao.novoSprite(fundoNuvens);
+
+		animacao.ligar();
+	}
+
 </script>
 </body>
 </html>
