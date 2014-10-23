@@ -16,6 +16,7 @@
 <script src="js/Sonic.js"></script>
 <script src="js/Colisor.js"></script>
 <script src="js/Fundo.js"></script>
+<script src="js/Nave.js"></script>
 <script>
 	var imgEspaco = new Image();
 	imgEspaco.src = 'images/fundo-espaco.png';
@@ -26,12 +27,16 @@
 	var imgNuvens = new Image();
 	imgNuvens.src = 'images/fundo-nuvens.png';
 
+	var imgNave = new Image();
+	imgNave.src = 'images/nave.png';
+
 	var carregadas = 0;
-	var total = 3;
+	var total = 4;
 
 	imgEspaco.onload = carregando;
 	imgEstrelas.onload = carregando;
 	imgNuvens.onload = carregando;
+	imgNave.onload = carregando;
 
 	function carregando() {
 		carregadas++;
@@ -52,11 +57,20 @@
 		fundoEstrelas.velocidade = 7;
 		fundoNuvens.velocidade = 10;
 
+		var teclado = new Teclado(document);
+
 		var animacao = new Animacao(ctx);
+
+		var nave = new Nave(ctx, teclado, imgNave);
+
+		nave.x = canvas.width / 2 - imgNave.width / 2;
+		nave.y = canvas.height / 2 - imgNave.height / 2;
+		nave.velocidade = 5;
 
 		animacao.novoSprite(fundoEspaco);
 		animacao.novoSprite(fundoEstrelas);
 		animacao.novoSprite(fundoNuvens);
+		animacao.novoSprite(nave);
 
 		animacao.ligar();
 	}
