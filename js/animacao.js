@@ -28,7 +28,7 @@ Animacao.prototype = {
 			return;
 		}
 
-		self.limparTela();
+		//self.limparTela();
 
 		self.sprites.forEach(function (sprite) {
 			sprite.atualizar();

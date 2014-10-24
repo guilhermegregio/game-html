@@ -24,6 +24,10 @@ Nave.prototype = {
 		if (this.teclado.pressionada(SETA_BAIXO) && this.y < this.context.canvas.height - this.imagem.height) {
 			this.y += this.velocidade;
 		}
+
+		//if (this.teclado.pressionada(ESPACO)) {
+		//	this.atirar();
+		//}
 	},
 	desenhar: function () {
 		this.context.drawImage(this.imagem, this.x, this.y, this.imagem.width, this.imagem.height);
