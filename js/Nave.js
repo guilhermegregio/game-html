@@ -36,5 +36,46 @@ Nave.prototype = {
 		var t = new Tiro(this.context, this);
 
 		this.animacao.novoSprite(t);
+		this.colisor.novoSprite(t);
+	},
+	retangulosColisao: function () {
+		var rets = [
+			{
+				x: this.x + 2,
+				y: this.y + 19,
+				largura: 9,
+				altura: 13
+			},
+			{
+				x: this.x + 13,
+				y: this.y + 3,
+				largura: 10,
+				altura: 33
+			},
+			{
+				x: this.x + 25,
+				y: this.y + 19,
+				largura: 9,
+				altura: 13
+			}
+		];
+
+		//var ctx = this.context;
+		//
+		//for (var i in rets) {
+		//	ctx.save();
+		//	ctx.strokeStyle = 'yellow';
+		//	ctx.strokeRect(rets[i].x, rets[i].y, rets[i].largura, rets[i].altura);
+		//	ctx.restore();
+		//}
+
+		return rets;
+	},
+	colidiuCom: function (outro) {
+		if (outro instanceof Ovni) {
+			// Fim de jogo!
+			this.animacao.desligar();
+			alert('GAME OVER');
+		}
 	}
 };

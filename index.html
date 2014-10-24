@@ -18,6 +18,7 @@
 <script src="js/Fundo.js"></script>
 <script src="js/Nave.js"></script>
 <script src="js/Tiro.js"></script>
+<script src="js/Ovni.js"></script>
 <script>
 	var imgEspaco = new Image();
 	imgEspaco.src = 'images/fundo-espaco.png';
@@ -31,13 +32,17 @@
 	var imgNave = new Image();
 	imgNave.src = 'images/nave.png';
 
+	var imgOvni = new Image();
+	imgOvni.src = 'images/ovni.png';
+
 	var carregadas = 0;
-	var total = 4;
+	var total = 5;
 
 	imgEspaco.onload = carregando;
 	imgEstrelas.onload = carregando;
 	imgNuvens.onload = carregando;
 	imgNave.onload = carregando;
+	imgOvni.onload = carregando;
 
 	function carregando() {
 		carregadas++;
@@ -62,6 +67,8 @@
 
 		var animacao = new Animacao(ctx);
 
+		var colisor = new Colisor();
+
 		var nave = new Nave(ctx, teclado, imgNave);
 
 		nave.x = canvas.width / 2 - imgNave.width / 2;
@@ -77,7 +84,24 @@
 		animacao.novoSprite(fundoNuvens);
 		animacao.novoSprite(nave);
 
+		colisor.novoSprite(nave);
+
+		animacao.novoProcessamento(colisor);
+
 		animacao.ligar();
+
+		setInterval(novoOvni, 1000);
+
+		function novoOvni() {
+			var ovni = new Ovni(ctx, imgOvni);
+
+			ovni.velocidade = Math.floor(5 + Math.random() * (20 - 5 + 1));
+			ovni.x = Math.floor(Math.random() * (canvas.width - imgOvni.width + 1));
+			ovni.y = -imgOvni.height;
+
+			animacao.novoSprite(ovni);
+			colisor.novoSprite(ovni);
+		}
 	}
 
 </script>
