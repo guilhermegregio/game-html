@@ -7,103 +7,18 @@
 </head>
 <body>
 <canvas id="game" width="500" height="500">Seu navegador não. Suporta.Atualize-o.</canvas>
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.backbone.js"></script>
 <script src="js/Animacao.js"></script>
-<script src="js/Bola.js"></script>
 <script src="js/Teclado.js"></script>
-<script src="js/Heroi.js"></script>
-<script src="js/Spritesheet.js"></script>
-<script src="js/Sonic.js"></script>
 <script src="js/Colisor.js"></script>
+
 <script src="js/Fundo.js"></script>
+
 <script src="js/Nave.js"></script>
-<script src="js/Tiro.js"></script>
 <script src="js/Ovni.js"></script>
-<script>
-	var imgEspaco = new Image();
-	imgEspaco.src = 'images/fundo-espaco.png';
+<script src="js/Tiro.js"></script>
 
-	var imgEstrelas = new Image();
-	imgEstrelas.src = 'images/fundo-estrelas.png';
-
-	var imgNuvens = new Image();
-	imgNuvens.src = 'images/fundo-nuvens.png';
-
-	var imgNave = new Image();
-	imgNave.src = 'images/nave.png';
-
-	var imgOvni = new Image();
-	imgOvni.src = 'images/ovni.png';
-
-	var carregadas = 0;
-	var total = 5;
-
-	imgEspaco.onload = carregando;
-	imgEstrelas.onload = carregando;
-	imgNuvens.onload = carregando;
-	imgNave.onload = carregando;
-	imgOvni.onload = carregando;
-
-	function carregando() {
-		carregadas++;
-		if (carregadas === total) {
-			iniciar();
-		}
-	}
-
-	function iniciar() {
-		var canvas = document.getElementById('game');
-		var ctx = canvas.getContext('2d');
-
-		var fundoEspaco = new Fundo(ctx, imgEspaco);
-		var fundoEstrelas = new Fundo(ctx, imgEstrelas);
-		var fundoNuvens = new Fundo(ctx, imgNuvens);
-
-		fundoEspaco.velocidade = 3;
-		fundoEstrelas.velocidade = 7;
-		fundoNuvens.velocidade = 10;
-
-		var teclado = new Teclado(document);
-
-		var animacao = new Animacao(ctx);
-
-		var colisor = new Colisor();
-
-		var nave = new Nave(ctx, teclado, imgNave);
-
-		nave.x = canvas.width / 2 - imgNave.width / 2;
-		nave.y = canvas.height / 2 - imgNave.height / 2;
-		nave.velocidade = 5;
-
-		teclado.disparou(ESPACO, function () {
-			nave.atirar();
-		});
-
-		animacao.novoSprite(fundoEspaco);
-		animacao.novoSprite(fundoEstrelas);
-		animacao.novoSprite(fundoNuvens);
-		animacao.novoSprite(nave);
-
-		colisor.novoSprite(nave);
-
-		animacao.novoProcessamento(colisor);
-
-		animacao.ligar();
-
-		setInterval(novoOvni, 1000);
-
-		function novoOvni() {
-			var ovni = new Ovni(ctx, imgOvni);
-
-			ovni.velocidade = Math.floor(5 + Math.random() * (20 - 5 + 1));
-			ovni.x = Math.floor(Math.random() * (canvas.width - imgOvni.width + 1));
-			ovni.y = -imgOvni.height;
-
-			animacao.novoSprite(ovni);
-			colisor.novoSprite(ovni);
-		}
-	}
-
-</script>
+<script src="js/game.js"></script>
 </body>
 </html>
