@@ -7,6 +7,13 @@ function Fundo(context, imagem) {
 
 Fundo.prototype = {
 	atualizar: function () {
+		this.posicaoEmenda += this.velocidade * this.animacao.decorrido / 1000;
+
+		if (this.posicaoEmenda > this.imagem.height) {
+			this.posicaoEmenda = 0;
+		}
+	},
+	desenhar: function () {
 		var img = this.imagem;
 
 		var posicaoY = this.posicaoEmenda - img.height;
@@ -16,12 +23,5 @@ Fundo.prototype = {
 		posicaoY = this.posicaoEmenda;
 
 		this.context.drawImage(img, 0, posicaoY, img.width, img.height);
-	},
-	desenhar: function () {
-		this.posicaoEmenda += this.velocidade;
-
-		if (this.posicaoEmenda > this.imagem.height) {
-			this.posicaoEmenda = 0;
-		}
 	}
-}
+};

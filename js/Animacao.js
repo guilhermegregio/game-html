@@ -5,6 +5,8 @@ function Animacao(context) {
 	this.processamentos = [];
 	this.spritesExcluir = [];
 	this.processamentoExcluir = [];
+	this.ultimoCiclo = 0;
+	this.decorrido = 0
 }
 
 Animacao.prototype = {
@@ -25,18 +27,18 @@ Animacao.prototype = {
 	desligar: function () {
 		this.ligado = false;
 	},
-	limparTela: function () {
-		var ctx = this.context;
-
-		ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-	},
 	proximoFrame: function () {
 		var self = this;
 		if (!self.ligado) {
 			return;
 		}
 
-		//self.limparTela();
+		var agora = new Date().getTime();
+
+		if (self.ultimoCiclo === 0) {
+			self.ultimoCiclo = agora;
+		}
+		self.decorrido = agora - self.ultimoCiclo;
 
 		self.sprites.forEach(function (sprite) {
 			sprite.atualizar();
@@ -51,6 +53,8 @@ Animacao.prototype = {
 		});
 
 		self.processarExclusoes();
+
+		self.ultimoCiclo = agora;
 
 		requestAnimationFrame(function () {
 			self.proximoFrame();
