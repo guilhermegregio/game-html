@@ -1,8 +1,36 @@
+#link_jogar {
+    /* Inicia oculto */
+    display: none;
+
+    /* Cores e fundo */
+    color: yellow;
+    background: url(../images/botao-jogar.png);
+
+    /* Fonte */
+    font-size: 20px;
+    font-family: sans-serif;
+
+    /* Sem sublinhado e com sombra */
+    text-decoration: none;
+    text-shadow: 2px 2px 5px black;
+
+    /* Posicionamento */
+    position: absolute;
+    left: 50%;
+    top: 330px;
+
+    margin-left: -26px;
+
+    /* A imagem do botão é 72x72, descontamos os paddings */
+    width: 52px;
+    height: 26px;
+    padding: 23px 10px;
+}
 
 canvas {
-	display: block;
-	border: 1px solid black;
-	width: 500px;
-	height: 500px;
-	margin: 0 auto;
+    display: block;
+    border: 1px solid black;
+    width: 500px;
+    height: 500px;
+    margin: 0 auto;
 }

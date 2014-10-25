@@ -6,26 +6,29 @@ function Spritesheet(context, imagem, linhas, colunas) {
 	this.intervalo = 0;
 	this.linha = 0;
 	this.coluna = 0;
+	this.fimDoCilo = null;
 }
-
 Spritesheet.prototype = {
 	proximoQuadro: function () {
 		var agora = new Date().getTime();
 
-		if (!this.ultimoTempo) {
-			this.ultimoTempo = agora;
-		}
+		// Se ainda não tem último tempo medido
+		if (!this.ultimoTempo) this.ultimoTempo = agora;
 
-		if (agora - this.ultimoTempo < this.intervalo) {
-			return;
-		}
+		// Já é hora de mudar de coluna?
+		if (agora - this.ultimoTempo < this.intervalo) return;
 
 		if (this.coluna < this.numColunas - 1) {
 			this.coluna++;
-		} else {
+		}
+		else {
 			this.coluna = 0;
+
+			// Avisar que acabou um ciclo!
+			if (this.fimDoCiclo) this.fimDoCiclo();
 		}
 
+		// Guardar hora da última mudança
 		this.ultimoTempo = agora;
 	},
 	desenhar: function (x, y) {
@@ -34,15 +37,14 @@ Spritesheet.prototype = {
 
 		this.context.drawImage(
 			this.imagem,
-			largura * this.coluna,
-			altura * this.linha,
+				largura * this.coluna,
+				altura * this.linha,
 			largura,
 			altura,
 			x,
 			y,
 			largura,
 			altura
-		)
-
+		);
 	}
-};
+}

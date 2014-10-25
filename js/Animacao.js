@@ -4,86 +4,88 @@ function Animacao(context) {
 	this.ligado = false;
 	this.processamentos = [];
 	this.spritesExcluir = [];
-	this.processamentoExcluir = [];
+	this.processamentosExcluir = [];
 	this.ultimoCiclo = 0;
-	this.decorrido = 0
+	this.decorrido = 0;
 }
-
 Animacao.prototype = {
-	novoSprite: function (sprite) {
+	novoSprite: function(sprite) {
 		this.sprites.push(sprite);
 		sprite.animacao = this;
 	},
-	excluirSprite: function (sprite) {
-		this.spritesExcluir.push(sprite);
-	},
-	excluirProcessamento: function (processamento) {
-		this.processamentoExcluir.push(processamento);
-	},
-	ligar: function () {
+	ligar: function() {
+		this.ultimoCiclo = 0;
 		this.ligado = true;
 		this.proximoFrame();
 	},
-	desligar: function () {
+	desligar: function() {
 		this.ligado = false;
 	},
-	proximoFrame: function () {
-		var self = this;
-		if (!self.ligado) {
-			return;
-		}
+	proximoFrame: function() {
+		// Posso continuar?
+		if ( ! this.ligado ) return;
 
 		var agora = new Date().getTime();
+		if (this.ultimoCiclo == 0) this.ultimoCiclo = agora;
+		this.decorrido = agora - this.ultimoCiclo;
 
-		if (self.ultimoCiclo === 0) {
-			self.ultimoCiclo = agora;
-		}
-		self.decorrido = agora - self.ultimoCiclo;
+		// Atualizamos o estado dos sprites
+		for (var i in this.sprites)
+			this.sprites[i].atualizar();
 
-		self.sprites.forEach(function (sprite) {
-			sprite.atualizar();
-		});
+		// Desenhamos os sprites
+		for (var i in this.sprites)
+			this.sprites[i].desenhar();
 
-		self.sprites.forEach(function (sprite) {
-			sprite.desenhar();
-		});
+		// Processamentos gerais
+		for (var i in this.processamentos)
+			this.processamentos[i].processar();
 
-		self.processamentos.forEach(function (processamento) {
-			processamento.processar();
-		});
+		// Processamento de exclusões
+		this.processarExclusoes();
 
-		self.processarExclusoes();
+		// Atualizar o instante do último ciclo
+		this.ultimoCiclo = agora;
 
-		self.ultimoCiclo = agora;
-
-		requestAnimationFrame(function () {
-			self.proximoFrame();
+		// Chamamos o próximo ciclo
+		var animacao = this;
+		requestAnimationFrame(function() {
+			animacao.proximoFrame();
 		});
 	},
-	processarExclusoes: function () {
+	novoProcessamento: function(processamento) {
+		this.processamentos.push(processamento);
+		processamento.animacao = this;
+	},
+	excluirSprite: function(sprite) {
+		this.spritesExcluir.push(sprite);
+	},
+	excluirProcessamento: function(processamento) {
+		this.processamentosExcluir.push(processamento);
+	},
+	processarExclusoes: function() {
+		// Criar novos arrays
 		var novoSprites = [];
 		var novoProcessamentos = [];
 
+		// Adicionar somente se não constar no array de excluídos
 		for (var i in this.sprites) {
-			if (this.spritesExcluir.indexOf(this.sprites[i]) === -1) {
+			if (this.spritesExcluir.indexOf(this.sprites[i]) == -1)
 				novoSprites.push(this.sprites[i]);
-			}
 		}
 
 		for (var i in this.processamentos) {
-			if (this.processamentoExcluir.indexOf(this.processamentos[i]) === -1) {
+			if (this.processamentosExcluir.indexOf(this.processamentos[i])
+				== -1)
 				novoProcessamentos.push(this.processamentos[i]);
-			}
 		}
 
+		// Limpar os arrays de exclusões
 		this.spritesExcluir = [];
-		this.processamentoExcluir = [];
+		this.processamentosExcluir = [];
 
+		// Substituir os arrays velhos pelos novos
 		this.sprites = novoSprites;
 		this.processamentos = novoProcessamentos;
-	},
-	novoProcessamento: function (processamento) {
-		this.processamentos.push(processamento);
-		processamento.animacao = this;
 	}
-};
+}

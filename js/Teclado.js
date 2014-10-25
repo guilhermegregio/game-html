@@ -1,35 +1,42 @@
+// Códigos de teclas - aqui vão todos os que forem necessários
 var SETA_ESQUERDA = 37;
+var SETA_ACIMA = 38;
 var SETA_DIREITA = 39;
-var SETA_CIMA = 38;
-var SETA_BAIXO = 40;
+var SETA_ABAIXO = 40;
 var ESPACO = 32;
+var ENTER = 13;
 
 function Teclado(elemento) {
-	var self = this;
-	self.elemento = elemento;
-	self.pressionadas = [];
-	self.disparadas = [];
-	self.funcoesDisparo = [];
+	this.elemento = elemento;
+
+	// Array de teclas pressionadas
+	this.pressionadas = [];
+
+	// Array de teclas disparadas
+	this.disparadas = [];
+
+	// Funções de disparo registradas
+	this.funcoesDisparo = [];
+
+	var teclado = this;
 
 	elemento.addEventListener('keydown', function (evento) {
-		var tecla = evento.keyCode;
+		var tecla = evento.keyCode;  // Tornando mais legível ;)
+		teclado.pressionadas[tecla] = true;
 
-		self.pressionadas[tecla] = true;
+		// Disparar somente se for o primeiro keydown da tecla
+		if (teclado.funcoesDisparo[tecla] && !teclado.disparadas[tecla]) {
 
-		if (self.funcoesDisparo[tecla] && !self.disparadas[tecla]) {
-			self.disparadas[tecla] = true;
-			self.funcoesDisparo[tecla]();
+			teclado.disparadas[tecla] = true;
+			teclado.funcoesDisparo[tecla]();
 		}
 	});
 
 	elemento.addEventListener('keyup', function (evento) {
-		var tecla = evento.keyCode;
-
-		self.pressionadas[tecla] = false;
-		self.disparadas[tecla] = false;
+		teclado.pressionadas[evento.keyCode] = false;
+		teclado.disparadas[evento.keyCode] = false;
 	});
 }
-
 Teclado.prototype = {
 	pressionada: function (tecla) {
 		return this.pressionadas[tecla];
@@ -37,4 +44,4 @@ Teclado.prototype = {
 	disparou: function (tecla, callback) {
 		this.funcoesDisparo[tecla] = callback;
 	}
-};
+}
