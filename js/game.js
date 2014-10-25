@@ -19,7 +19,7 @@ function carregarImagens() {
 		espaco: 'fundo-espaco.png',
 		estrelas: 'fundo-estrelas.png',
 		nuvens: 'fundo-nuvens.png',
-		nave: 'nave.png',
+		nave: 'nave-spritesheet.png',
 		ovni: 'ovni.png'
 	};
 
@@ -70,8 +70,8 @@ function configuracoesIniciais() {
 	nuvens.velocidade = 500;
 
 	// Nave
-	nave.x = canvas.width / 2 - imagens.nave.width / 2;
-	nave.y = canvas.height - imagens.nave.height;
+	nave.x = canvas.width / 2 - 18;
+	nave.y = canvas.height - 48;
 	nave.velocidade = 200;
 
 	// Tiro

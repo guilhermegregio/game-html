@@ -4,8 +4,8 @@ function Tiro(context, nave) {
 
 	this.largura = 3;
 	this.altura = 10;
-	this.x = nave.x + nave.imagem.width / 2 - this.largura / 2;
-	this.y = this.nave.y - this.altura;
+	this.x = nave.x + 18;
+	this.y = nave.y - this.altura;
 	this.velocidade = 300;
 	this.cor = 'yellow';
 }
